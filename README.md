@@ -2,9 +2,12 @@
 Cloud Computing Fundamentals
 1. What is Cloud Computing?
 
-2. 
+
 Cloud computing is the delivery of computing services—including data storage, servers, databases, networking, and software—over the internet ("the cloud"). Instead of keeping files and programs on your local computer or physical hard drive, everything is saved and run on remote data centers managed by cloud providers.
-3. Cloud Service Models (IaaS, PaaS, SaaS)
+
+
+
+4. Cloud Service Models (IaaS, PaaS, SaaS)
 
 
 Infrastructure as a Service (IaaS)
@@ -19,6 +22,10 @@ Software as a Service (SaaS)
 Definition: Delivers software applications over the internet, on-demand, typically via a subscription model. The provider manages everything; users simply log in and use the software through a browser.
 Analogy: Riding a public bus (you just buy a ticket and travel).
 Example: Gmail, Google Drive, Microsoft 365.
+
+
+
+
 4. Financial Models: CapEx, OpEx, and TCO
 
 
