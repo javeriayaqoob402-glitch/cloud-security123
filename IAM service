@@ -1,0 +1,150 @@
+# AWS IAM — Complete Cloud Security Notes 🔐
+
+## 1. IAM (Identity and Access Management)
+
+IAM AWS ka security system hai jo control karta hai ke **who can access AWS and what they can do.**
+
+**Analogy:** Office mein ID card batata hai ke aap kaun hain aur access card batata hai ke aap kin rooms mein ja sakte hain.
+
+## 2. One Stolen Password
+
+Agar attacker ko kisi IAM user ka password mil jaye, to woh us account ko access karne ki koshish kar sakta hai.
+
+- **Without Least Privilege:** Excessive permissions ki wajah se attacker sensitive data access, resources modify ya delete kar sakta hai.
+- **With Least Privilege:** Attacker sirf woh actions perform kar sakta hai jo compromised identity ki permissions allow karti hain.
+- **With MFA:** Password ke ilawa extra verification ki zaroorat hoti hai.
+
+**Analogy:** Agar chor ko ek room ki key mil jaye, to woh automatically poori building access nahi kar sakta.
+
+## 3. Least Privilege Principle
+
+Least Privilege ka matlab hai user ya service ko **sirf utni permissions dena jitni uske kaam ke liye zaroori hain.**
+
+**Example:** Agar kisi user ko S3 files sirf read karni hain, to usay full Administrator access dene ki zaroorat nahi.
+
+**Benefits:**
+- Unauthorized access ka risk kam hota hai.
+- Accidental deletion aur modification ka risk limit hota hai.
+- Stolen credentials se possible damage kam ho sakta hai.
+
+## 4. Every Request Must Pass Two Questions
+
+### Question 1: Who Are You?
+**Authentication:** Identity verify karna.
+
+Example: Password aur MFA ke zariye sign-in verify karna.
+
+**Analogy:** Security guard aapki ID check karta hai.
+
+### Question 2: What Are You Allowed to Do?
+**Authorization:** Check karna ke requested action ki permission hai ya nahi.
+
+Example: Kya user ko S3 object read karne ki permission hai?
+
+**Analogy:** Guard check karta hai ke aapko server room mein enter karne ki permission hai ya nahi.
+
+**Remember:** Authentication successful hone ka matlab yeh nahi ke aap har action perform kar sakte hain.
+
+## 5. Five Building Blocks of IAM
+
+### 1. Root User
+AWS account ki main identity hoti hai, jiske paas extensive account-level permissions hoti hain.
+
+**Security:** MFA enable karein aur daily tasks ke liye root user use na karein.
+
+**Analogy:** Building ka main owner jiske paas master key hai.
+
+### 2. IAM User
+Kisi person ya workload ki identity hoti hai.
+
+**Security:** Sirf required permissions dein aur credentials secure rakhein.
+
+**Analogy:** Office ka employee jiske paas apna ID card hai.
+
+### 3. IAM Group
+Multiple IAM users ka collection hota hai. Group ko policy attach karke users ko common permissions di ja sakti hain.
+
+**Example:** Developers group ko development resources ka required access dena.
+
+**Analogy:** Office ka department jahan employees ko common access milta hai.
+
+### 4. IAM Role
+Aisi identity jise trusted user ya AWS service assume karke permissions hasil kar sakti hai. Aksar temporary credentials use hote hain.
+
+**Example:** EC2 instance ko role ke through S3 objects read karne ka access dena.
+
+**Analogy:** Temporary duty pass jo assigned kaam ke liye access deta hai.
+
+### 5. IAM Policy
+Permissions ke rules define karti hai ke kaun sa action kis resource par allowed ya denied hai.
+
+**Example:** S3 objects read karne ki permission dena, lekin delete karne ki nahi.
+
+**Analogy:** Office ke written rules jo batate hain ke employee kya kar sakta hai.
+
+## 6. Five Building Blocks — Quick Revision
+
+| Building Block | Purpose |
+|---|---|
+| Root User | Main AWS account identity |
+| IAM User | Individual identity |
+| IAM Group | Users ko organize karna aur common permissions dena |
+| IAM Role | Trusted identity ke through access |
+| IAM Policy | Permissions ke rules |
+
+## 7. Additional Security Practices
+
+- **MFA:** Password ke ilawa extra verification.
+- **Credential Management:** Credentials securely handle karein aur unused access keys remove karein.
+- **Monitoring:** AWS CloudTrail se account activity review karein.
+- **Regular Review:** Permissions aur users ko regularly check karein.
+- **Temporary Credentials:** Jahan suitable ho, long-term access keys ki jagah roles use karein.
+
+## 8. Practice Questions
+
+**Q1. What is IAM?**  
+Answer: AWS identities and permissions manage karne ka system.
+
+**Q2. What is Least Privilege?**  
+Answer: Sirf required permissions dena.
+
+**Q3. What can happen if a password is stolen?**  
+Answer: Attacker compromised identity ki permissions ke mutabiq resources access ya modify kar sakta hai.
+
+**Q4. How does Least Privilege reduce damage?**  
+Answer: Attacker ke allowed actions ko limit karta hai.
+
+**Q5. What is Authentication?**  
+Answer: Verifying who you are.
+
+**Q6. What is Authorization?**  
+Answer: Checking what you are allowed to do.
+
+**Q7. What is the purpose of an IAM Group?**  
+Answer: Users ko organize karna aur common permissions manage karna.
+
+**Q8. What is an IAM Role?**  
+Answer: An assumable identity that can provide temporary access.
+
+**Q9. What is an IAM Policy?**  
+Answer: A document that defines permissions.
+
+**Q10. Why should we protect the Root User?**  
+Answer: Because it has extensive permissions over the AWS account.
+
+---
+
+## Final Takeaway
+
+**IAM + Least Privilege + MFA + Monitoring = Stronger AWS Security.**
+
+Har access request ke liye samjhein:
+
+1. **Who are you?** — Authentication
+2. **What are you allowed to do?** — Authorization
+
+Aur IAM ke five building blocks yaad rakhein:
+
+**Root User → IAM User → IAM Group → IAM Role → IAM Policy**
+
+*Note: Yeh five concepts IAM ke important building blocks hain; security ko strong banane ke liye MFA, least privilege aur monitoring bhi zaroori hain.*
