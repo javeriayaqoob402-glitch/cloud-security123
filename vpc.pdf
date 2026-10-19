@@ -1,0 +1,282 @@
+# AWS VPC — Easy English + Roman Urdu Notes
+
+## 1. What is a VPC?
+
+**VPC stands for Virtual Private Cloud.**
+
+A VPC is a logically isolated virtual network in AWS where we launch and manage resources such as EC2 instances, databases, and applications.
+
+**Easy Urdu:**
+VPC AWS ke andar hamari apni private network space hoti hai. Is mein hum apne resources ko organize karte hain aur unki networking control karte hain.
+
+**Analogy:**
+VPC ko ek housing society samjho. Society ke andar different areas, roads, security rules aur buildings hoti hain.
+
+**Example:**
+- VPC CIDR: `10.0.0.0/16`
+- Public Subnet: `10.0.1.0/24`
+- Private Subnet: `10.0.2.0/24`
+
+---
+
+## 2. What is an IP Address?
+
+An IP address identifies a device or network interface on a network.
+
+**Easy Urdu:**
+IP address kisi device ka network address hota hai, jiski madad se network par us tak data pohanchaya ja sakta hai.
+
+**Example:**
+`192.168.1.10`
+
+**Analogy:**
+Jaise har ghar ka postal address hota hai, waise hi network par devices ka IP address hota hai.
+
+---
+
+## 3. What is CIDR?
+
+CIDR stands for Classless Inter-Domain Routing.
+
+CIDR tells us the size of an IP address range and how many bits belong to the network portion.
+
+**Example:**
+`10.0.1.0/24`
+
+`/24` means the first 24 bits represent the network portion. IPv4 has 32 bits in total.
+
+### Common CIDR ranges
+
+| CIDR | Total IPv4 addresses | AWS assignable addresses per subnet |
+|---|---:|---:|
+| `/24` | 256 | 251 |
+| `/25` | 128 | 123 |
+| `/26` | 64 | 59 |
+| `/27` | 32 | 27 |
+
+**Easy Urdu:**
+CIDR batata hai ke IP addresses ka range kitna bara hai.
+
+**Important:** AWS har IPv4 subnet mein 5 addresses reserve karta hai. Is liye `/24` subnet mein 256 total addresses hote hain, lekin 251 assignable hote hain.
+
+**Analogy:**
+Agar ek area mein 256 gharon ke addresses hain, to CIDR us area ka size batata hai.
+
+---
+
+## 4. What is a Subnet?
+
+A subnet is a smaller IP network inside a VPC.
+
+**Easy Urdu:**
+Subnet, VPC ke andar ek chhota network area hota hai.
+
+**Analogy:**
+VPC ek housing society hai aur subnet us society ka ek block hai.
+
+**Example:**
+- VPC: `10.0.0.0/16`
+- Subnet 1: `10.0.1.0/24`
+- Subnet 2: `10.0.2.0/24`
+
+Hum different resources ko different subnets mein rakh sakte hain.
+
+### Types of Subnets
+
+**Public Subnet:**
+A subnet whose route table has a route to an Internet Gateway.
+
+Example: Public-facing web server.
+
+**Private Subnet:**
+A subnet that does not have a direct route to an Internet Gateway for internet access.
+
+Example: Database server.
+
+**Important:** Public subnet mein resource rakhne se woh automatically internet par accessible nahi hota. Public IP aur appropriate security rules bhi zaroori ho sakte hain.
+
+---
+
+## 5. What is a Router?
+
+A router forwards data packets between networks.
+
+**Easy Urdu:**
+Router data ko sahi network ki taraf bhejne mein madad karta hai.
+
+AWS VPC ke andar virtual routing infrastructure hoti hai. Hum route tables ke zariye traffic ka raasta configure karte hain.
+
+**Analogy:**
+Router traffic police ki tarah hai jo data ko sahi raaste par bhejta hai.
+
+---
+
+## 6. What is a Route Table?
+
+A route table contains rules that determine where network traffic goes.
+
+**Example:**
+`0.0.0.0/0 → Internet Gateway`
+
+Iska matlab hai ke IPv4 traffic ke liye, jiska koi more-specific route match nahi karta, Internet Gateway ko next hop banaya gaya hai.
+
+**Easy Urdu:**
+Route table network ka map hai jo batata hai ke traffic ko kahan bhejna hai.
+
+**Analogy:**
+Road map batata hai ke kis road se kis destination par jana hai.
+
+---
+
+## 7. What is an Internet Gateway (IGW)?
+
+An Internet Gateway enables communication between a VPC and the internet when the required networking and security configuration is in place.
+
+**Easy Urdu:**
+Internet Gateway VPC aur internet ke darmiyan connectivity provide karta hai.
+
+**Analogy:**
+Ye society ke main gate ki tarah hai.
+
+**Internet access ke liye:**
+1. Internet Gateway VPC ke saath attached ho.
+2. Public subnet ki route table mein IGW ka route ho.
+3. Resource ki public IP addressing sahi ho.
+4. Security Group aur Network ACL traffic allow karein.
+
+**Important:** Sirf Internet Gateway attach karne se EC2 instance public nahi ho jata.
+
+---
+
+## 8. What is a Security Group?
+
+A Security Group acts as a virtual firewall for AWS resources such as EC2 instances.
+
+It controls inbound and outbound traffic through rules.
+
+**Easy Urdu:**
+Security Group decide karta hai ke EC2 instance par kis type ka traffic allow hoga.
+
+**Example:**
+- SSH: TCP port 22
+- HTTP: TCP port 80
+- HTTPS: TCP port 443
+
+**Analogy:**
+Building ka security guard hai jo check karta hai ke kis traffic ko entry deni hai.
+
+**Security tip:** SSH port 22 ko internet ke tamam IP addresses ke liye open karne se bacho. Zaroorat ke mutabiq trusted IPs ko allow karo.
+
+---
+
+## 9. What is a Network ACL (NACL)?
+
+A Network ACL is a firewall that operates at the subnet level.
+
+It supports allow and deny rules for inbound and outbound traffic.
+
+**Easy Urdu:**
+NACL subnet ke level par traffic control karta hai.
+
+**Analogy:**
+Security Group building ke gate ka guard hai, jabke NACL poore block ke entrance par security check hai.
+
+**Difference:**
+- Security Group: Resource level, stateful.
+- Network ACL: Subnet level, stateless.
+
+---
+
+## 10. What is a Private Subnet?
+
+A private subnet is a subnet without a direct route through an Internet Gateway for public internet access.
+
+**Example:**
+Database server in a private subnet.
+
+Private resources ko internet par directly expose kiye baghair, zaroorat ke mutabiq NAT Gateway ya doosre controlled connectivity methods se outbound access diya ja sakta hai.
+
+**Analogy:**
+Society ka private block jahan public visitors ko direct access nahi milta.
+
+**Important:** AWS mein separate “Private VPC” type nahi hoti. Ek VPC mein public aur private dono subnets ho sakte hain.
+
+---
+
+## 11. What is an Availability Zone?
+
+An Availability Zone (AZ) is an isolated location within an AWS Region, consisting of one or more data centers.
+
+**Example:**
+Region: `eu-north-1` (Stockholm)
+
+Availability Zones may have names such as `eu-north-1a` and `eu-north-1b`.
+
+**Easy Urdu:**
+Region ko ek shehar aur Availability Zones ko us shehar ke alag isolated areas samjho.
+
+**Why use multiple AZs?**
+High availability aur fault tolerance improve karne ke liye.
+
+**Important:** Har subnet ek specific Availability Zone mein hota hai.
+
+---
+
+## 12. Complete VPC Example
+
+Suppose we create this setup:
+
+- VPC CIDR: `10.0.0.0/16`
+- Public subnet: `10.0.1.0/24`
+- Private subnet: `10.0.2.0/24`
+- Internet Gateway attached to the VPC
+- Public EC2 web server in the public subnet
+- Database in the private subnet
+
+### How does it work?
+
+1. A user opens the website in a browser.
+2. The request reaches the public web server if its public IP, routes, and security rules permit it.
+3. The web server communicates with the private database using the appropriate private network route and database security rules.
+4. The database is not directly exposed to the public internet.
+
+**Analogy:**
+Customer society ke public reception par aata hai. Receptionist request ko andar ke office tak pohanchata hai. Private office ka direct public entrance nahi hota.
+
+---
+
+## 13. Quick Revision
+
+| Component | Simple meaning |
+|---|---|
+| VPC | AWS ka logically isolated network |
+| IP Address | Network par address |
+| CIDR | IP range ka size |
+| Subnet | VPC ke andar chhota network |
+| Router | Networks ke darmiyan packets forward karta hai |
+| Route Table | Traffic ka raasta batati hai |
+| Internet Gateway | VPC aur internet ke darmiyan connectivity |
+| Security Group | Resource-level firewall |
+| NACL | Subnet-level firewall |
+| Availability Zone | Region ke andar isolated infrastructure location |
+
+---
+
+## 14. Practice Questions
+
+1. What does VPC stand for?
+2. What is the purpose of a subnet?
+3. How many total IPv4 addresses are in a `/24` subnet?
+4. How many IPv4 addresses does AWS reserve in each subnet?
+5. What is the difference between a public subnet and a private subnet?
+6. What does an Internet Gateway do?
+7. What is the purpose of a route table?
+8. What is the difference between a Security Group and a NACL?
+9. Can one VPC contain both public and private subnets?
+10. Why do we use multiple Availability Zones?
+
+## Final concept
+
+**VPC → Subnets → Route Tables → Internet Gateway → Security Rules → AWS Resources**
+
+In concepts ko samajh kar tum AWS networking aur Cloud Security ki practical labs ke liye strong foundation bana sakti ho.
